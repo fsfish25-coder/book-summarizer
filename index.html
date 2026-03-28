@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>ملخّص الكتب</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Tajawal', sans-serif; background: #f5efe0; color: #1a1209; min-height: 100vh; }
+.wrap { max-width: 600px; margin: 0 auto; padding: 1.2rem; }
+header { text-align: center; padding: 1.5rem 0 1.2rem; border-bottom: 2px solid #c9a84c; margin-bottom: 1.5rem; }
+h1 { font-family: 'Amiri', serif; font-size: 2.4rem; color: #1a1209; margin-bottom: 0.3rem; }
+.sub { font-size: 0.85rem; color: #6b5a3e; font-weight: 300; }
+.card { background: #faf6ed; border: 1px solid #e8dcc8; border-radius: 14px; padding: 1.2rem; margin-bottom: 1rem; box-shadow: 0 2px 8px rgba(26,18,9,0.08); }
+.lbl { font-size: 0.78rem; font-weight: 700; color: #8b3a1a; margin-bottom: 0.7rem; letter-spacing: 0.5px; }
+.api-row { display: flex; gap: 0.6rem; align-items: center; }
+input[type="password"] { flex: 1; min-width: 0; border: 1.5px solid #e8dcc8; background: white; border-radius: 8px; padding: 0.65rem 0.9rem; font-size: 0.9rem; color: #1a1209; direction: ltr; }
+input:focus { outline: none; border-color: #c9a84c; }
+.link-btn { background: #8b3a1a; color: white; border: none; border-radius: 8px; padding: 0.65rem 0.8rem; font-family: 'Tajawal', sans-serif; font-size: 0.78rem; font-weight: 700; cursor: pointer; white-space: nowrap; text-decoration: none; display: inline-block; }
+.upload-area { border: 2.5px dashed #c9a84c; border-radius: 12px; padding: 2rem 1rem; text-align: center; background: #faf6ed; margin-bottom: 1rem; position: relative; }
+.upload-area input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; font-size: 100px; }
+.upload-icon { font-size: 2.8rem; display: block; margin-bottom: 0.6rem; }
+.upload-area h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.3rem; }
+.upload-area p { font-size: 0.82rem; color: #8a7560; }
+.file-badge { display: none; background: rgba(74,103,65,0.12); border-radius: 8px; padding: 0.6rem 1rem; margin-top: 0.8rem; font-size: 0.85rem; color: #4a6741; font-weight: 600; word-break: break-all; }
+.len-row { display: flex; gap: 0.5rem; }
+.len-btn { flex: 1; padding: 0.65rem; border: 1.5px solid #e8dcc8; border-radius: 8px; background: white; font-family: 'Tajawal', sans-serif; font-size: 0.85rem; font-weight: 600; color: #8a7560; cursor: pointer; }
+.len-btn.on { background: #c9a84c; border-color: #c9a84c; color: white; }
+select { width: 100%; padding: 0.65rem 0.9rem; border: 1.5px solid #e8dcc8; border-radius: 8px; background: white; font-family: 'Tajawal', sans-serif; font-size: 0.9rem; color: #1a1209; }
+.go-btn { width: 100%; padding: 1rem; background: #1a1209; color: #e8c96a; border: none; border-radius: 12px; font-family: 'Tajawal', sans-serif; font-size: 1.05rem; font-weight: 700; cursor: pointer; margin-bottom: 1rem; }
+.go-btn:disabled { opacity: 0.5; }
+.prog { display: none; margin-bottom: 1rem; }
+.prog-bar { height: 6px; background: #e8dcc8; border-radius: 3px; overflow: hidden; margin-bottom: 0.5rem; }
+.prog-fill { height: 100%; background: linear-gradient(90deg, #c9a84c, #8b3a1a); border-radius: 3px; transition: width 0.4s; width: 0%; }
+.prog-text { text-align: center; font-size: 0.85rem; color: #6b5a3e; }
+.result { display: none; }
+.result-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; flex-wrap: wrap; gap: 0.5rem; }
+.result-title { font-family: 'Amiri', serif; font-size: 1.3rem; font-weight: 700; }
+.act-row { display: flex; gap: 0.5rem; }
+.act-btn { padding: 0.5rem 0.8rem; border-radius: 8px; border: 1.5px solid; font-family: 'Tajawal', sans-serif; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
+.btn-listen { background: #4a6741; border-color: #4a6741; color: white; }
+.btn-copy { background: white; border-color: #e8dcc8; color: #6b5a3e; }
+.btn-save { background: white; border-color: #c9a84c; color: #8b3a1a; }
+.summary-box { background: #faf6ed; border: 1px solid #e8dcc8; border-radius: 12px; padding: 1.5rem; line-height: 2; font-family: 'Amiri', serif; font-size: 1.1rem; white-space: pre-wrap; box-shadow: 0 2px 8px rgba(26,18,9,0.08); }
+.saved-section { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #e8dcc8; }
+.saved-title { font-family: 'Amiri', serif; font-size: 1.2rem; margin-bottom: 1rem; }
+.saved-item { background: #faf6ed; border: 1px solid #e8dcc8; border-radius: 10px; padding: 0.9rem 1rem; display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; cursor: pointer; }
+.saved-item h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.2rem; }
+.saved-item p { font-size: 0.75rem; color: #8a7560; }
+.del-btn { background: none; border: none; font-size: 1.1rem; cursor: pointer; padding: 0.3rem; color: #ccc; }
+.empty { text-align: center; color: #a89a82; font-size: 0.85rem; padding: 1.5rem 0; }
+.toast { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) translateY(80px); background: #1a1209; color: #e8c96a; padding: 0.7rem 1.5rem; border-radius: 50px; font-size: 0.88rem; font-weight: 600; transition: transform 0.3s; z-index: 999; white-space: nowrap; }
+.toast.show { transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div style="font-size:2.2rem;margin-bottom:0.3rem">📚</div>
+    <h1>ملخّص</h1>
+    <p class="sub">تلخيص الكتب بالذكاء الاصطناعي · من صفحات إلى كلمات</p>
+  </header>
+
+  <div class="card">
+    <div class="lbl">🔑 مفتاح Gemini API</div>
+    <div class="api-row">
+      <input type="password" id="apiKey" placeholder="AIzaSy..." />
+      <a class="link-btn" href="https://aistudio.google.com/app/apikey" target="_blank">احصل عليه مجاناً ↗</a>
+    </div>
+  </div>
+
+  <div class="upload-area">
+    <input type="file" id="fileInput" accept=".pdf,.txt" />
+    <span class="upload-icon">📖</span>
+    <h3>ارفع الكتاب هنا</h3>
+    <p>PDF أو TXT · اضغط لاختيار الملف</p>
+    <div class="file-badge" id="fileBadge">📄 <span id="fileName"></span></div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">📏 طول الملخص</div>
+    <div class="len-row">
+      <button class="len-btn" data-v="short">قصير</button>
+      <button class="len-btn on" data-v="medium">متوسط</button>
+      <button class="len-btn" data-v="long">مطوّل</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">🌐 لغة الملخص</div>
+    <select id="langSel">
+      <option value="ar">العربية</option>
+      <option value="en">الإنجليزية</option>
+    </select>
+  </div>
+
+  <button class="go-btn" id="goBtn">✨ ابدأ التلخيص</button>
+
+  <div class="prog" id="prog">
+    <div class="prog-bar"><div class="prog-fill" id="progFill"></div></div>
+    <p class="prog-text" id="progText">جارٍ المعالجة...</p>
+  </div>
+
+  <div class="result" id="result">
+    <div class="result-head">
+      <div class="result-title">📜 الملخص</div>
+      <div class="act-row">
+        <button class="act-btn btn-copy" id="copyBtn">📋 نسخ</button>
+        <button class="act-btn btn-listen" id="listenBtn">🔊 استمع</button>
+        <button class="act-btn btn-save" id="saveBtn">💾 حفظ</button>
+      </div>
+    </div>
+    <div class="summary-box" id="summaryBox"></div>
+  </div>
+
+  <div class="saved-section">
+    <div class="saved-title">🗂️ الملخصات المحفوظة</div>
+    <div id="savedList"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var curLen = 'medium';
+var fileData = null;
+var curSummary = '';
+
+document.querySelectorAll('.len-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.len-btn').forEach(function(b) { b.classList.remove('on'); });
+    btn.classList.add('on');
+    curLen = btn.getAttribute('data-v');
+  });
+});
+
+document.getElementById('fileInput').addEventListener('change', function(e) {
+  var file = e.target.files && e.target.files[0];
+  if (!file) return;
+  document.getElementById('fileName').textContent = file.name;
+  document.getElementById('fileBadge').style.display = 'block';
+  fileData = null;
+  var isPDF = file.name.toLowerCase().endsWith('.pdf') || file.type === 'application/pdf';
+  if (isPDF) {
+    showToast('جارٍ تحميل PDF...');
+    var r = new FileReader();
+    r.onload = function(ev) {
+      var b64 = ev.target.result.split(',')[1];
+      fileData = { type: 'pdf', content: b64 };
+      showToast('✅ تم تحميل PDF');
+    };
+    r.onerror = function() { showToast('فشل قراءة الملف'); };
+    r.readAsDataURL(file);
+  } else {
+    var r2 = new FileReader();
+    r2.onload = function(ev) {
+      fileData = { type: 'txt', content: ev.target.result };
+      showToast('✅ تم تحميل الملف');
+    };
+    r2.onerror = function() { showToast('فشل قراءة الملف'); };
+    r2.readAsText(file);
+  }
+});
+
+document.getElementById('goBtn').addEventListener('click', function() {
+  var key = document.getElementById('apiKey').value.trim();
+  if (!key) { showToast('أدخل مفتاح API أولاً'); return; }
+  if (!fileData) { showToast('ارفع ملفاً أولاً'); return; }
+  var btn = document.getElementById('goBtn');
+  btn.disabled = true;
+  document.getElementById('result').style.display = 'none';
+  setProgress(20, 'جارٍ إرسال الكتاب...');
+  var lang = document.getElementById('langSel').value;
+  var lenMap = { short: 'قصير 150-200 كلمة', medium: 'متوسط 300-400 كلمة', long: 'مفصّل 600-800 كلمة' };
+  var langTxt = lang === 'ar' ? 'باللغة العربية فقط' : 'in English only';
+  var body;
+  if (fileData.type === 'pdf') {
+    body = {
+      contents: [{ parts: [
+        { inline_data: { mime_type: 'application/pdf', data: fileData.content } },
+        { text: 'لخّص هذا الكتاب ' + langTxt + '. الملخص يكون ' + lenMap[curLen] + '. يغطي الأفكار الرئيسية بشكل منظم.' }
+      ]}],
+      generationConfig: { maxOutputTokens: 1500, temperature: 0.7 }
+    };
+  } else {
+    var txt = fileData.content;
+    if (txt.length > 14000) txt = txt.substring(0, 14000) + '...';
+    body = {
+      contents: [{ parts: [{ text: 'لخّص النص التالي ' + langTxt + '. الملخص يكون ' + lenMap[curLen] + '. يغطي الأفكار الرئيسية بشكل منظم.\n\nالنص:\n' + txt }] }],
+      generationConfig: { maxOutputTokens: 1500, temperature: 0.7 }
+    };
+  }
+  setProgress(50, 'الذكاء الاصطناعي يحلل...');
+  fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' + key, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(d) {
+    if (d.error) { throw new Error(d.error.message || 'خطأ'); }
+    curSummary = d.candidates[0].content.parts[0].text;
+    setProgress(100, 'تم!');
+    setTimeout(function() {
+      document.getElementById('prog').style.display = 'none';
+      document.getElementById('summaryBox').textContent = curSummary;
+      document.getElementById('result').style.display = 'block';
+      document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+    }, 400);
+  })
+  .catch(function(err) {
+    document.getElementById('prog').style.display = 'none';
+    showToast('خطأ: ' + err.message);
+  })
+  .finally(function() { btn.disabled = false; });
+});
+
+document.getElementById('copyBtn').addEventListener('click', function() {
+  if (!curSummary) return;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(curSummary).then(function() { showToast('تم النسخ!'); });
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = curSummary; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.focus(); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    showToast('تم النسخ!');
+  }
+});
+
+document.getElementById('listenBtn').addEventListener('click', function() {
+  if (!curSummary) return;
+  if (window.speechSynthesis.speaking) { window.speechSynthesis.cancel(); showToast('تم الإيقاف'); return; }
+  var u = new SpeechSynthesisUtterance(curSummary);
+  u.lang = document.getElementById('langSel').value === 'ar' ? 'ar-SA' : 'en-US';
+  u.rate = 0.9;
+  window.speechSynthesis.speak(u);
+  showToast('جارٍ القراءة...');
+});
+
+document.getElementById('saveBtn').addEventListener('click', function() {
+  if (!curSummary) return;
+  try {
+    var saved = getSaved();
+    var name = document.getElementById('fileName').textContent || 'كتاب';
+    saved.unshift({ id: Date.now(), name: name, date: new Date().toLocaleDateString('ar-SA'), text: curSummary });
+    localStorage.setItem('mlkhs', JSON.stringify(saved.slice(0, 20)));
+    renderSaved(); showToast('تم الحفظ!');
+  } catch(e) { showToast('فشل الحفظ'); }
+});
+
+function getSaved() { try { return JSON.parse(localStorage.getItem('mlkhs') || '[]'); } catch(e) { return []; } }
+
+function renderSaved() {
+  var list = document.getElementById('savedList');
+  var saved = getSaved();
+  if (!saved.length) { list.innerHTML = '<p class="empty">لا توجد ملخصات محفوظة بعد</p>'; return; }
+  list.innerHTML = saved.map(function(s) {
+    return '<div class="saved-item" onclick="loadSaved(' + s.id + ')"><div><h4>📄 ' + s.name + '</h4><p>' + s.date + ' · ' + s.text.length + ' حرف</p></div><button class="del-btn" onclick="event.stopPropagation();delSaved(' + s.id + ')">🗑️</button></div>';
+  }).join('');
+}
+
+function loadSaved(id) {
+  var saved = getSaved();
+  for (var i = 0; i < saved.length; i++) {
+    if (saved[i].id === id) {
+      curSummary = saved[i].text;
+      document.getElementById('summaryBox').textContent = saved[i].text;
+      document.getElementById('result').style.display = 'block';
+      document.getElementById('result').scrollIntoView({ behavior: 'smooth' }); break;
+    }
+  }
+}
+
+function delSaved(id) {
+  localStorage.setItem('mlkhs', JSON.stringify(getSaved().filter(function(s) { return s.id !== id; })));
+  renderSaved(); showToast('تم الحذف');
+}
+
+function setProgress(pct, txt) {
+  document.getElementById('prog').style.display = 'block';
+  document.getElementById('progFill').style.width = pct + '%';
+  document.getElementById('progText').textContent = txt;
+}
+
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(function() { t.classList.remove('show'); }, 2500);
+}
+
+renderSaved();
+</script>
+</body>
+</html>
